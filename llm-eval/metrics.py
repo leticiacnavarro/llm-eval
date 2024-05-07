@@ -13,40 +13,47 @@ def find_min_index(lst):
     return min_index
 
 def process(model, list_json, type_bench, perplexity, accuracy):
-    golds = []
-    predict_ppl = []
-    predict_acc = []
+    golds, predict_ppl, predict_acc  = [], [], []
+
+    accuracy_, accuracy_ppl = 0, 0
 
     for data in tqdm(list_json):
-        choices = ''
-        idx = 0
+        choice_str = ''
         letras = string.ascii_uppercase[:10]
         golds.append(letras[data['gold']])
 
         letter_choices = []
         for choice in data["choices"]:
-            choices = choices + f"{letras[idx]}) {choice} "
+            idx = data["choices"].index(choice)
+            choice_str = choice_str + f"{letras[idx]}) {choice} "
             letter_choices.append(f"[{letras[idx]}] {choice}.")
-            idx = idx + 1
 
         if perplexity:
-            if type_bench == "hella":
+            
+            lst_choices = []
+
+            if type_bench == "hella" or "piqa":
                 prompt = prompts.get_prompt_complete(data['query'])
+                lst_choices = data['choices']
+            elif type_bench == "bulas":
+                prompt = prompts.get_prompt_bulas(data['query'], choice_str)
+                lst_choices = letter_choices
             else:
-                prompt = prompts.get_prompt_multiple_choice(data['query'], choices)
+                prompt = prompts.get_prompt_multiple_choice(data['query'], choice_str)
+                lst_choices = letter_choices
 
             lst_ppl = []
-            for choice in data["choices"]:
+            for choice in lst_choices:
                 ppl = model.perplexity(prompt, choice)
                 lst_ppl.append(ppl)
-            # print(f"PPL {choice}: {ppl}")
+            #     print(f"PPL {choice}: {ppl}")
             # print(letras[find_min_index(lst_ppl)])
             # print("Gold:", letras[data['gold']])
             
             predict_ppl.append(letras[find_min_index(lst_ppl)])
 
         if accuracy:
-            prompt = get_prompt(type_bench, data['query'], choices)
+            prompt = get_prompt(type_bench, data['query'], choice_str)
             answer = model.make_question(prompt)
 
             # Encontrar letras entre colchetes

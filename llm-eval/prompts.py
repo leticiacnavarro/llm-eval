@@ -2,21 +2,43 @@
 def get_prompt_multiple_choice(query: str, choices: str):
     prompt = f"""[INST]Select the right option that answer the question between []. 
     Example:
-    Question: How much is 1+1?
-    Options: A) 2 B) 15 C) Imposible
-    Answer: [A]
+    Question: A student throws a ball into the air. While the ball travels up, the speed of the ball decreases. What force causes the ball to slow while traveling up?
+    Options: A) electricity B) gravity C) magnetism d) tension
+    Answer: 
+    [B] gravity  
     
-    [/INST]    
-    Question: {query}
+    [/INST]  
+
+    {query}
     Options: {choices}
     Answer:
     """
     return prompt
 
-def get_prompt_complete(query: str):
-        prompt = f"""[INST] Complete the sequence: [/INST]{query}"""
+def get_prompt_bulas(query, options):
+        return f"""[INST]Responda a pergunta sobre medicamentos com a letra que melhor responde a pergunta.
+        Exemplo:
+
+        Questão: Qual a dosagem inicial recomendada de Abilify comprimidos para adultos com esquizofrenia?
+        Opções: A) 2 mg uma vez ao dia B) 10 a 15 mg uma vez ao dia C) 15 mg uma vez ao dia D) 30 mg uma vez ao dia
+        Resposta: 
+        [B] 10 a 15 mg uma vez ao dia
+        [/INST]
+        
+        Questão: {query}
+        Opções: {options}
+        Resposta:
+        """
+
+def get_prompt_complete(query, shots):
+        prompt = f"""{shots}[INST] Complete the sequence: [/INST]{query}Complete: """
         return prompt   
 
+def get_prompt_question(query, shots):
+        return f"""{shots}[INST]Select the right option that answer the question between [] [/INST]{query}Answer: """ 
+
+def get_prompt_question_science(query, choices):
+        return f"""<<SYS>> You are a very intelligent studious student. <</SYS>> [INST]Answer the science question: [/INST]{query}""" 
 
 def get_prompt(type: str, query: str, choices: str):
     if type == 'bf':

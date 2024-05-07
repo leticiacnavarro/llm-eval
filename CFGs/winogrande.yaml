@@ -1,0 +1,8 @@
+models:
+  - meta-llama/Meta-Llama-3-8B-Instruct
+experiment_name: winogrande
+quantizer: ''
+test: False
+access_token: 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
+path: data/winogrande.jsonl
+type_bench: complete

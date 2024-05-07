@@ -1,0 +1,16 @@
+models:
+  # - mistralai/Mistral-7B-Instruct-v0.2
+  # # - meta-llama/Llama-2-7b-chat-hf
+  # - /home/navarro/codes/mistral_bula/models/mistral_pontos_5_epoch
+  # - /home/navarro/codes/mistral_bula/models/mistral_pontos_7_epoch
+  # - /home/navarro/codes/mistral_bula/models/mistral_pontos_10_epoch
+  # - /home/navarro/codes/mistral_bula/models/mistral_pontos_15_epoch
+  # - /home/navarro/codes/mistral_bula/models/mistral_bula_5_epoch
+  # - /home/navarro/codes/mistral_bula/models/mistral_bula_5_epoch_r_16
+  # - /home/navarro/codes/mistral_bula/models/mistral_bula_5_epoch_r_256
+  - meta-llama/Meta-Llama-3-8B-Instruct
+experiment_name: llama3_bula
+quantizer: ''
+test: False
+type: bulas
+access_token: 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

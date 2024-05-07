@@ -1,0 +1,11 @@
+models:
+  - meta-llama/Meta-Llama-3-8B-Instruct
+  - mistralai/Mistral-7B-Instruct-v0.2
+experiment_name: llama3_bula
+quantizer: ''
+test: False
+path: data/mini_bulas.jsonl
+type: bulas
+
+type_bench: questions
+access_token: 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

@@ -1,0 +1,10 @@
+models:
+  - meta-llama/Meta-Llama-3-8B-Instruct
+  - mistralai/Mistral-7B-Instruct-v0.2
+experiment_name: piqa
+quantizer: ''
+test: False
+path: data/piqa.jsonl
+type: piqa
+type_bench: complete
+access_token: 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

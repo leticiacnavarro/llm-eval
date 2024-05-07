@@ -3,7 +3,7 @@ from torch import float32, nn
 from transformers import AutoTokenizer, BitsAndBytesConfig, AutoModelForCausalLM
 
 class LLM():
-    def __init__(self, model_id, quantizer = None):
+    def __init__(self, model_id, access_token, quantizer = None):
 
         self.model_id = model_id
         
@@ -22,13 +22,14 @@ class LLM():
             quantizer_cfg = None
 
         self.quantizer_cfg = quantizer_cfg
-        self.tokenizer = AutoTokenizer.from_pretrained(model_id)
+        self.tokenizer = AutoTokenizer.from_pretrained(model_id, token=access_token)
         self.tokenizer.pad_token = self.tokenizer.eos_token
         self.tokenizer.padding_side = "right"
         self.model = AutoModelForCausalLM.from_pretrained(
             model_id,
             quantization_config=quantizer_cfg,
             torch_dtype=torch.float16,
+            token = access_token,
             #device_map = 'cuda'
         )
     def prepare_model(self):
@@ -55,7 +56,7 @@ class LLM():
             neg_log_likelihood = outputs.loss
         
         ppl = torch.exp(neg_log_likelihood)
-        return ppl   
+        return ppl.item()   
         
 
     def make_question(self, question: str, inst: str = ""):
