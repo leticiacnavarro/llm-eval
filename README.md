@@ -13,8 +13,9 @@ git clone https://github.com/leticiacnavarro/llm-eval.git
 
 3. Run the benchmark script by providing the path to a configuration file:
 
+```
 python3 llm-eval/benchmark.py path/to/your/configuration.yaml 
-
+```
 Replace `path/to/your/configuration.yaml` with the path to your YAML configuration file.
 
 ## Configuration
